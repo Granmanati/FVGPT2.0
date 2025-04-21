@@ -27,21 +27,31 @@ function App() {
     setCargando(true);
 
     try {
-      const res = await fetch(`${backendUrl}/api/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mensaje })
-      });
-      const data = await res.json();
-      setConversacion(prev => [...prev, { tipo: 'bot', texto: data.respuesta }]);
+        const res = await fetch(`${backendUrl}/api/chat`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ mensaje })
+        });
+        
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        
+        const data = await res.json();
+        setConversacion(prev => [...prev, { tipo: 'bot', texto: data.respuesta }]);
     } catch (error) {
-      console.error('Error:', error);
-      setConversacion(prev => [...prev, { tipo: 'bot', texto: 'Lo siento, hubo un error al procesar tu mensaje.' }]);
+        console.error('Error:', error);
+        setConversacion(prev => [...prev, { 
+            tipo: 'bot', 
+            texto: 'Lo siento, hubo un error al procesar tu mensaje.' 
+        }]);
     } finally {
-      setMensaje('');
-      setCargando(false);
+        setMensaje('');
+        setCargando(false);
     }
-  };
+};
 
   return (
     <div className="chat-container">
@@ -92,10 +102,22 @@ function App() {
       </form>
 
       <footer className="footer">
-        <a href="#"><i className="fas fa-shield-alt"></i> Privacidad</a>
-        <span>Fisiovanguardia &copy; 2030</span>
-        <a href="#"><i className="fas fa-question-circle"></i> Ayuda</a>
-      </footer>
+  <button 
+    type="button" 
+    className="footer-link" 
+    onClick={() => alert('Página de privacidad en construcción')}
+  >
+    <i className="fas fa-shield-alt"></i> Privacidad
+  </button>
+  <span>Fisiovanguardia &copy; 2030</span>
+  <button 
+    type="button" 
+    className="footer-link" 
+    onClick={() => alert('Página de ayuda en construcción')}
+  >
+    <i className="fas fa-question-circle"></i> Ayuda
+  </button>
+</footer>
     </div>
   );
 }
