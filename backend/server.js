@@ -12,8 +12,9 @@ const openai = new OpenAI({
 
 // Configuración de CORS
 const allowedOrigins = [
-    'http://localhost:3000',    // Frontend en desarrollo
-    'https://fvgpt2.netlify.app'  // Frontend en producción
+    'http://localhost:3000',         // Frontend en desarrollo
+    'https://fvgpt2.netlify.app',    // Frontend en producción (URL anterior)
+    'https://fvgpt2-0.netlify.app'   // Frontend en producción (URL nueva)
 ];
 
 app.use(cors({
